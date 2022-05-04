@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WorkScheduleData.Models.Employee>
+
+@{
+    ViewBag.Title = "Employee";
+}
+
+<h2>Employee</h2>
+
+<p>
+    @Html.ActionLink("Add Employee", "Add")
+</p>
+
+<table class="table">
+    <tr bgcolor = "lightblue"">
+         <th>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.HomePhone)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th>
+            Options
+        </th>
+    </tr>
+
+    @foreach(var item in Model)
+    {
+        <tr bgcolor = #D0ECE7>
+            <td>
+            @Html.DisplayFor(model => item.EmployeeId)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.LastName)
+        </td>
+         <td>
+            @Html.DisplayFor(model => item.HomePhone)
+        </td>
+         <td>
+            @Html.DisplayFor(model => item.Active)
+        </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId, action="edit" }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
+            </td>
+    </tr>
+    }
+</table>

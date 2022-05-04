@@ -1,0 +1,68 @@
+﻿@model WorkScheduleWeb.Models.EmployeeDTO
+
+@{
+    var action = ViewData["Action"];
+}
+
+    <h3>@action Employee</h3>
+    <form asp-controller="employee" asp-action="save" method="post">
+        @Html.Hidden("action",action)
+        <table border="0" cellpadding="2" cellspacing="2">
+            @if (action != null && action.ToString().ToLower().Equals("edit"))
+            {
+                <input asp-for="Employee.EmployeeId" type="hidden" />
+            } 
+            else
+            {
+            
+            }
+            
+            <tr>
+                <td>First Name</td>
+                <td>
+                    <input asp-for="Employee.FirstName" />
+                </td>
+                <td>
+                    <span asp-validation-for="Employee.FirstName"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>
+                    <input asp-for="Employee.LastName" />
+                </td>
+                <td>
+                    <span asp-validation-for="Employee.LastName"></span>
+                </td>
+            </tr>
+             <tr>
+                <td>Home Phone</td>
+                <td>
+                    <input asp-for="Employee.HomePhone" />
+                </td>
+                <td>
+                    <span asp-validation-for="Employee.HomePhone"></span>
+                </td>
+            </tr>
+                 @if (action != null && action.ToString().ToLower().Equals("edit"))
+                      {
+                          <tr>
+                        @foreach (var skill in Model.Skills)
+                        {
+
+                            <input asp-for="Skills." type="checkbox" name="Skills" value="@skill.Description">
+                            <label for="Skills">@skill.Description</label><br>
+                        }
+                        </tr>
+                      }
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" value="Save" /><input type="button" onclick= "history.go(-1)" value="Back" />
+                </td>
+            </tr>
+
+        </table>
+        
+    </form>
+
