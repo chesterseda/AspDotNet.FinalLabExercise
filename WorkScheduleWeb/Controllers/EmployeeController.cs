@@ -54,6 +54,7 @@ namespace WorkScheduleWeb.Controllers
             ViewData["Action"] = "Edit";
             var employee = this.employeeRepository.FindByPrimaryKey(id);
             var skills = _skillService.FindAll();
+            ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(id);
             EmployeeDTO employeeDTO = new EmployeeDTO()
             {
                 Employee = employee,
@@ -73,19 +74,19 @@ namespace WorkScheduleWeb.Controllers
                 }
                 else if (action.ToLower().Equals("edit"))
                 {
-                    employeeRepository.Update(employeeDTO.Employee);
 
-                    foreach (var skill in employeeDTO.Skills)
+                    employeeRepository.Update(employeeDTO.Employee);
+                    
+                    if (!_employeeSkillService.IsExisting(employeeDTO.Employee.EmployeeId, employeeDTO.SkillId))
                     {
                         EmployeeSkill employeeSkill = new EmployeeSkill()
                         {
                             EmployeeId = employeeDTO.Employee.EmployeeId,
-                            SkillsId = skill.SkillsId
+                            SkillsId = employeeDTO.SkillId
                         };
-
-                        _employeeSkillService.Update(employeeSkill);
+                        _employeeSkillService.Add(employeeSkill);
                     }
-                    _employeeSkillService.SaveChanges();
+
                 }
 
                 return RedirectToAction("Index");

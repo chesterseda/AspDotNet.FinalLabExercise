@@ -8,7 +8,11 @@ namespace WorkScheduleWeb.Services
     {
         //public EmployeeSkill FindByPrimaryKey(int id);
 
-        public EmployeeSkill Update(EmployeeSkill employeeSkill);
+        public EmployeeSkill Add(EmployeeSkill employeeSkill);
+
+        public IEnumerable<string> GetByEmployeeId(int id);
+
+        public bool IsExisting(int EmployeeId, int skillId);
 
         public void SaveChanges();
     }
@@ -24,14 +28,24 @@ namespace WorkScheduleWeb.Services
         //    return _employeeSkillRepository.FindByPrimaryKey(id);
         //}
 
-        public EmployeeSkill Update(EmployeeSkill employeeSkill)
+        public EmployeeSkill Add(EmployeeSkill employeeSkill)
         {
-           return _employeeSkillRepository.Update(employeeSkill);
+           return _employeeSkillRepository.Add(employeeSkill);
         }
 
         public void SaveChanges()
         {
             _employeeSkillRepository.SaveChanges();
+        }
+
+        public IEnumerable<string> GetByEmployeeId(int id)
+        {
+            return _employeeSkillRepository.GetByEmployeeId(id);
+        }
+
+        public bool IsExisting(int EmployeeId, int skillId)
+        {
+            return _employeeSkillRepository.IsExisting(EmployeeId, skillId);
         }
     }
 }

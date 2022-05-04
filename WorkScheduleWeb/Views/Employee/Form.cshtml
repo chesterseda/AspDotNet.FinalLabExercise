@@ -2,6 +2,8 @@
 
 @{
     var action = ViewData["Action"];
+    int index = 1;
+    var skillList = ViewData["skillList"] as List<string>;
 }
 
     <h3>@action Employee</h3>
@@ -20,7 +22,7 @@
             <tr>
                 <td>First Name</td>
                 <td>
-                    <input asp-for="Employee.FirstName" />
+                    <input asp-for="Employee.FirstName" required/>
                 </td>
                 <td>
                     <span asp-validation-for="Employee.FirstName"></span>
@@ -29,7 +31,7 @@
             <tr>
                 <td>Last Name</td>
                 <td>
-                    <input asp-for="Employee.LastName" />
+                    <input asp-for="Employee.LastName" required/>
                 </td>
                 <td>
                     <span asp-validation-for="Employee.LastName"></span>
@@ -38,23 +40,31 @@
              <tr>
                 <td>Home Phone</td>
                 <td>
-                    <input asp-for="Employee.HomePhone" />
+                    <input asp-for="Employee.HomePhone" required/>
                 </td>
                 <td>
                     <span asp-validation-for="Employee.HomePhone"></span>
                 </td>
             </tr>
+                
                  @if (action != null && action.ToString().ToLower().Equals("edit"))
-                      {
-                          <tr>
-                        @foreach (var skill in Model.Skills)
                         {
-
-                            <input asp-for="Skills." type="checkbox" name="Skills" value="@skill.Description">
-                            <label for="Skills">@skill.Description</label><br>
-                        }
-                        </tr>
-                      }
+                            <tr>
+                                <td>
+                                    Add Skills
+                                </td>
+                                <td> 
+                                    <select asp-for="SkillId"> 
+                                      <option value=1>Sleeping</option>
+                                      <option value=2>Eating</option>
+                                      <option value=3>Programming</option>
+                                      <option value=4>Editing</option>
+                                      <option value=5>Studying</option>
+                                    </select>
+                                </td>
+                               
+                             </tr>
+                          }
             <tr>
                 <td>&nbsp;</td>
                 <td>
@@ -65,4 +75,15 @@
         </table>
         
     </form>
-
+@if (action != null && action.ToString().ToLower().Equals("edit"))
+{
+   <h4>Employee Skill</h4>
+<ul>
+    @foreach(var skill in skillList)
+    {
+        <li>
+            @skill
+        </li>
+    }
+</ul> 
+}

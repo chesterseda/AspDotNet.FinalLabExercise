@@ -6,6 +6,9 @@ namespace WorkScheduleWeb.Models
     public class EmployeeDTO
     {
         public Employee Employee { get; set; }
+
         public IEnumerable<Skill> Skills { get; set; }
+
+        public int SkillId { get; set; }
     }
 }
