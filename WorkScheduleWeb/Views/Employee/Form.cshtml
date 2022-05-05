@@ -2,7 +2,6 @@
 
 @{
     var action = ViewData["Action"];
-    int index = 1;
     var skillList = ViewData["skillList"] as List<string>;
 }
 
@@ -14,15 +13,11 @@
             {
                 <input asp-for="Employee.EmployeeId" type="hidden" />
             } 
-            else
-            {
-            
-            }
             
             <tr>
                 <td>First Name</td>
                 <td>
-                    <input asp-for="Employee.FirstName" required/>
+                    <input type="text" asp-for="Employee.FirstName" required/>
                 </td>
                 <td>
                     <span asp-validation-for="Employee.FirstName"></span>
@@ -31,7 +26,7 @@
             <tr>
                 <td>Last Name</td>
                 <td>
-                    <input asp-for="Employee.LastName" required/>
+                    <input type="text" asp-for="Employee.LastName" required/>
                 </td>
                 <td>
                     <span asp-validation-for="Employee.LastName"></span>
@@ -40,7 +35,7 @@
              <tr>
                 <td>Home Phone</td>
                 <td>
-                    <input asp-for="Employee.HomePhone" required/>
+                    <input type="text" asp-for="Employee.HomePhone" required/>
                 </td>
                 <td>
                     <span asp-validation-for="Employee.HomePhone"></span>
@@ -56,6 +51,7 @@
                                 </td>
                                 <td> 
                                     <select asp-for="SkillId"> 
+                                        <option disabled selected value=0>Choose Skill</option>
                                         @foreach(var skill in Model.Skills)
                                         {
                                              <option value=@skill.SkillsId>@skill.Description</option>
@@ -63,7 +59,6 @@
                        
                                     </select>
                                 </td>
-                               
                              </tr>
                           }
             <tr>

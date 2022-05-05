@@ -10,17 +10,14 @@ namespace WorkScheduleWeb.Controllers
 {
     public class EmployeeController : Controller
     {
-        private IEmployeeRepository employeeRepository;
-
         private readonly IEmployeeService _employeeService;
 
         private readonly ISkillService _skillService;
 
         private readonly IEmployeeSkillService _employeeSkillService;
 
-        public EmployeeController(IEmployeeRepository employeeRepository,IEmployeeService employeeService, ISkillService skillService, IEmployeeSkillService employeeSkillService)
+        public EmployeeController(IEmployeeService employeeService, ISkillService skillService, IEmployeeSkillService employeeSkillService)
         {
-            this.employeeRepository = employeeRepository;
             _employeeService = employeeService;
             _skillService = skillService;
             _employeeSkillService = employeeSkillService;
@@ -76,21 +73,24 @@ namespace WorkScheduleWeb.Controllers
                 {
 
                     _employeeService.Update(employeeDTO.Employee);
-                    
-                    if (!_employeeSkillService.IsExisting(employeeDTO.Employee.EmployeeId, employeeDTO.SkillId))
+                    if(employeeDTO.SkillId != 0)
                     {
-                        EmployeeSkill employeeSkill = new EmployeeSkill()
+                        if (!_employeeSkillService.IsExisting(employeeDTO.Employee.EmployeeId, employeeDTO.SkillId))
                         {
-                            EmployeeId = employeeDTO.Employee.EmployeeId,
-                            SkillsId = employeeDTO.SkillId
-                        };
-                        _employeeSkillService.Add(employeeSkill);
+                            EmployeeSkill employeeSkill = new EmployeeSkill()
+                            {
+                                EmployeeId = employeeDTO.Employee.EmployeeId,
+                                SkillsId = employeeDTO.SkillId
+                            };
+                            _employeeSkillService.Insert(employeeSkill);
+                        }
+                        ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(employeeDTO.Employee.EmployeeId);
+                        ViewData["Action"] = "Edit";
+                        var skills = _skillService.FindAll();
+                        employeeDTO.Skills = skills;
+                        return View("Form", employeeDTO);
                     }
-                    ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(employeeDTO.Employee.EmployeeId);
-                    ViewData["Action"] = "Edit";
-                    var skills = _skillService.FindAll();
-                    employeeDTO.Skills = skills;
-                    return View("Form", employeeDTO);
+                    
                 }
 
                 return RedirectToAction("Index");

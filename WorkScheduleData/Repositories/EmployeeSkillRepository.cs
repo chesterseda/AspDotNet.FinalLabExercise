@@ -11,11 +11,7 @@ namespace WorkScheduleData.Repositories
 {
     public interface IEmployeeSkillRepository : IBaseRepository<EmployeeSkill>
     {
-        public void SaveChanges();
-
         public IEnumerable<string> GetByEmployeeId(int id);
-
-        public EmployeeSkill Add(EmployeeSkill entity);
 
         public bool IsExisting(int EmployeeId, int skillId);
     }
@@ -24,14 +20,6 @@ namespace WorkScheduleData.Repositories
     {
         public EmployeeSkillRepository(WorkScheduleContext context) : base(context)
         {
-        }
-
-        public EmployeeSkill Add(EmployeeSkill entity)
-        {
-            Context.Add<EmployeeSkill>(entity);
-            Context.SaveChanges();
-            return entity;
-
         }
 
         public IEnumerable<string> GetByEmployeeId(int id)
@@ -52,11 +40,6 @@ namespace WorkScheduleData.Repositories
             }
 
             return employeeList;
-        }
-
-        public void SaveChanges()
-        {
-            this.Context.SaveChanges();
         }
 
         public bool IsExisting(int EmployeeId, int skillId)

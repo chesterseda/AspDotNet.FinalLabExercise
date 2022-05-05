@@ -6,36 +6,24 @@ namespace WorkScheduleWeb.Services
 {
     public interface IEmployeeSkillService
     {
-        //public EmployeeSkill FindByPrimaryKey(int id);
-
-        public EmployeeSkill Add(EmployeeSkill employeeSkill);
+        public EmployeeSkill Insert(EmployeeSkill employeeSkill);
 
         public IEnumerable<string> GetByEmployeeId(int id);
 
         public bool IsExisting(int EmployeeId, int skillId);
-
-        public void SaveChanges();
     }
     public class EmployeeSkillService : IEmployeeSkillService
     {
         private readonly IEmployeeSkillRepository _employeeSkillRepository;
+
         public EmployeeSkillService(IEmployeeSkillRepository employeeSkillRepository)
         {
             _employeeSkillRepository = employeeSkillRepository;
         }
-        //public Skill FindByPrimaryKey(int id)
-        //{
-        //    return _employeeSkillRepository.FindByPrimaryKey(id);
-        //}
 
-        public EmployeeSkill Add(EmployeeSkill employeeSkill)
+        public EmployeeSkill Insert(EmployeeSkill employeeSkill)
         {
-           return _employeeSkillRepository.Add(employeeSkill);
-        }
-
-        public void SaveChanges()
-        {
-            _employeeSkillRepository.SaveChanges();
+            return _employeeSkillRepository.Insert(employeeSkill);
         }
 
         public IEnumerable<string> GetByEmployeeId(int id)
