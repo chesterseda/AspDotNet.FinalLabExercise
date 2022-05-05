@@ -33,9 +33,9 @@ namespace WorkScheduleWeb.Controllers
 
         public IActionResult Delete(int id)
         {
-            var employee = this.employeeRepository.FindByPrimaryKey(id);
+            var employee = _employeeService.FindByPrimaryKey(id);
             employee.Active = false;
-            employeeRepository.Update(employee);
+            _employeeService.Update(employee);
             return RedirectToAction("Index");
         }
 
@@ -52,7 +52,7 @@ namespace WorkScheduleWeb.Controllers
         public IActionResult Edit(int id)
         {
             ViewData["Action"] = "Edit";
-            var employee = this.employeeRepository.FindByPrimaryKey(id);
+            var employee = _employeeService.FindByPrimaryKey(id);
             var skills = _skillService.FindAll();
             ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(id);
             EmployeeDTO employeeDTO = new EmployeeDTO()
@@ -70,12 +70,12 @@ namespace WorkScheduleWeb.Controllers
                 employeeDTO.Employee.Active = true;
                 if (action.ToLower().Equals("add"))
                 {
-                    employeeRepository.Insert(employeeDTO.Employee);
+                    _employeeService.Insert(employeeDTO.Employee);
                 }
                 else if (action.ToLower().Equals("edit"))
                 {
 
-                    employeeRepository.Update(employeeDTO.Employee);
+                    _employeeService.Update(employeeDTO.Employee);
                     
                     if (!_employeeSkillService.IsExisting(employeeDTO.Employee.EmployeeId, employeeDTO.SkillId))
                     {
@@ -86,7 +86,11 @@ namespace WorkScheduleWeb.Controllers
                         };
                         _employeeSkillService.Add(employeeSkill);
                     }
-
+                    ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(employeeDTO.Employee.EmployeeId);
+                    ViewData["Action"] = "Edit";
+                    var skills = _skillService.FindAll();
+                    employeeDTO.Skills = skills;
+                    return View("Form", employeeDTO);
                 }
 
                 return RedirectToAction("Index");

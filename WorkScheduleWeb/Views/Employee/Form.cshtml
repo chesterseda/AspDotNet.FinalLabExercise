@@ -49,7 +49,7 @@
                 
                  @if (action != null && action.ToString().ToLower().Equals("edit"))
                         {
-                            <tr>
+                            @*<tr>
                                 <td>
                                     Add Skills
                                 </td>
@@ -63,12 +63,27 @@
                                     </select>
                                 </td>
                                
+                             </tr>*@
+                             <tr>
+                                <td>
+                                    Add Skills
+                                </td>
+                                <td> 
+                                    <select asp-for="SkillId"> 
+                                        @foreach(var skill in Model.Skills)
+                                        {
+                                             <option value=@skill.SkillsId>@skill.Description</option>
+                                        }
+                       
+                                    </select>
+                                </td>
+                               
                              </tr>
                           }
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <input type="submit" value="Save" /><input type="button" onclick= "history.go(-1)" value="Back" />
+                    <input class="btn btn-primary" type="submit" value="Save" /> &nbsp;&nbsp; <a class="btn btn-primary" asp-area="" asp-controller="Employee" asp-action="Index">Back</a>
                 </td>
             </tr>
 

@@ -6,6 +6,10 @@ namespace WorkScheduleWeb.Services
 {
     public interface IEmployeeService
     {
+        public Employee Update(Employee employee);
+
+        public Employee Insert(Employee employee);
+
         public Employee FindByPrimaryKey(int id);
         public IEnumerable<Employee> FindAll();
 
@@ -31,6 +35,16 @@ namespace WorkScheduleWeb.Services
         public IEnumerable<Employee> FindAllActive()
         {
             return _employeeRepository.FindAllActive();
+        }
+
+        public Employee Update(Employee employee)
+        {
+            return _employeeRepository.Update(employee);
+        }
+
+        public Employee Insert(Employee employee)
+        {
+            return _employeeRepository.Insert(employee);
         }
     }
 }
