@@ -41,26 +41,12 @@
                     <span asp-validation-for="Employee.HomePhone"></span>
                 </td>
             </tr>
-                
-                 @if (action != null && action.ToString().ToLower().Equals("edit"))
+                @if (action != null && action.ToString().ToLower().Equals("edit"))
                         {
+                            <input type="hidden" asp-for="SkillId" value=0/>
 
-                             <tr>
-                                <td>
-                                    Add Skills
-                                </td>
-                                <td> 
-                                    <select asp-for="SkillId"> 
-                                        <option disabled selected value=0>Choose Skill</option>
-                                        @foreach(var skill in Model.Skills)
-                                        {
-                                             <option value=@skill.SkillsId>@skill.Description</option>
-                                        }
-                       
-                                    </select>
-                                </td>
-                             </tr>
                           }
+                
             <tr>
                 <td>&nbsp;</td>
                 <td>
@@ -71,15 +57,63 @@
         </table>
         
     </form>
+    <form asp-controller="employee" asp-action="AddSkill" method="post">
+        
+        @Html.Hidden("action","addskill")
+        <table border="0" cellpadding="2" cellspacing="2">
+            @if (action != null && action.ToString().ToLower().Equals("edit"))
+            {
+                <input asp-for="Employee.EmployeeId" type="hidden" />
+            } 
+   
+                    <input type="hidden" asp-for="Employee.FirstName" required/>
+
+                    <input type="hidden" asp-for="Employee.LastName" required/>
+           
+                    <input type="hidden" asp-for="Employee.HomePhone" required/>
+
+                @if (action != null && action.ToString().ToLower().Equals("edit"))
+        {
+            <input type="hidden" name="hiddenEmployeeId" value=@Model.Employee.EmployeeId/>
+
+            <tr>
+                <td>
+                    Add Skills
+                </td>
+                <td> 
+                    <select asp-for="SkillId"> 
+                        <option disabled selected value=0>Choose Skill</option>
+                        @foreach (var skill in Model.Skills)
+                        {
+                            <option value=@skill.SkillsId>@skill.Description</option>
+                        }
+
+                    </select>
+                </td>
+
+            </tr>
+
+
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="AddSkill" />
+                </td>
+            </tr>
+            }
+        </table>
+        
+    </form>
 @if (action != null && action.ToString().ToLower().Equals("edit"))
 {
    <h4>Employee Skill</h4>
-<ul>
-    @foreach(var skill in skillList)
-    {
-        <li>
-            @skill
-        </li>
-    }
-</ul> 
+
+        <ul>
+            @foreach(var skill in skillList)
+            {
+                <li>
+                    @skill
+                </li>
+            }
+        </ul> 
 }

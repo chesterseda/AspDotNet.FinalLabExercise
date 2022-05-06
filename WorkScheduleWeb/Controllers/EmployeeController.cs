@@ -59,7 +59,10 @@ namespace WorkScheduleWeb.Controllers
             };
             return View("Form", employeeDTO);
         }
-
+        public IActionResult AddSkill(string action, EmployeeDTO employeeDTO)
+        {
+            return Save(action, employeeDTO);
+        }
         public IActionResult Save(string action, EmployeeDTO employeeDTO)
         {
             if (ModelState.IsValid)
@@ -69,7 +72,7 @@ namespace WorkScheduleWeb.Controllers
                 {
                     _employeeService.Insert(employeeDTO.Employee);
                 }
-                else if (action.ToLower().Equals("edit"))
+                else if (action.ToLower().Equals("edit") || action.ToLower().Equals("addskill"))
                 {
 
                     _employeeService.Update(employeeDTO.Employee);
@@ -84,13 +87,21 @@ namespace WorkScheduleWeb.Controllers
                             };
                             _employeeSkillService.Insert(employeeSkill);
                         }
-                        ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(employeeDTO.Employee.EmployeeId);
-                        ViewData["Action"] = "Edit";
-                        var skills = _skillService.FindAll();
-                        employeeDTO.Skills = skills;
-                        return View("Form", employeeDTO);
+                        if (action.ToLower().Equals("addskill"))
+                        {
+                            ViewData["skillList"] = _employeeSkillService.GetByEmployeeId(employeeDTO.Employee.EmployeeId);
+                            ViewData["Action"] = "Edit";
+                            var skills = _skillService.FindAll();
+                            employeeDTO.Skills = skills;
+                            return View("Form", employeeDTO);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index");
+                        }
+
+
                     }
-                    
                 }
 
                 return RedirectToAction("Index");
@@ -100,5 +111,7 @@ namespace WorkScheduleWeb.Controllers
                 return View("Form", employeeDTO.Employee);
             }
         }
+
+ 
     }
 }

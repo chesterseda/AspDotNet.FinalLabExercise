@@ -24,9 +24,6 @@
          <th>
             @Html.DisplayNameFor(model => model.HomePhone)
         </th>
-         <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
         <th>
             Options
         </th>
@@ -47,13 +44,10 @@
          <td>
             @Html.DisplayFor(model => item.HomePhone)
         </td>
-         <td>
-            @Html.DisplayFor(model => item.Active)
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId, action="edit" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
         </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId, action="edit" }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
-            </td>
     </tr>
     }
 </table>
